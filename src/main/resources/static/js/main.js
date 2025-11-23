@@ -6,7 +6,7 @@ var usernameForm = document.querySelector('#usernameForm');
 var mensagemForm = document.querySelector('#mensagemForm');
 var mensagemInput = document.querySelector('#mensagem');
 var mensagemArea = document.querySelector('#mensagemArea');
-var connectingElement = document.querySelector('.connecting');
+var connectingElement = document.querySelector('.conectando');
 
 var stompClient = null;
 var username = null;
@@ -31,41 +31,37 @@ function connect(event) {
     event.preventDefault();
 }
 
-
 function onConnected() {
     // Inscrever no topico publico
     stompClient.subscribe('/topic/public', onMessageReceived);
 
-    // Tell your username to the server
+    // Envia o nome de usuario para o servidor
     stompClient.send("/app/chat.addUser",
         {},
         JSON.stringify({remetente: username, type: 'ENTRAR'})
-    )
+    );
 
     connectingElement.classList.add('hidden');
 }
 
-
 function onError(error) {
-    connectingElement.textConteudo = 'Voce não conseguiu entrar no servidor WebSocket. Por favor recarregue a pagina e tente denovo!';
+    connectingElement.textContent = 'Não foi possível conectar ao servidor WebSocket. Por favor recarregue a página!';
     connectingElement.style.color = 'red';
 }
 
-
 function enviarMensagem(event) {
-    var messagecConteudo = messageInput.value.trim();
-    if(messagecConteudo && stompClient) {
+    var mensagemConteudo = mensagemInput.value.trim();
+    if(mensagemConteudo && stompClient) {
         var chatMessage = {
-            remetente : username,
-            conteudo: messageInput.value,
+            remetente: username,
+            conteudo: mensagemInput.value,
             type: 'CHAT'
         };
         stompClient.send("/app/chat.enviarMensagem", {}, JSON.stringify(chatMessage));
-        messageInput.value = '';
+        mensagemInput.value = '';
     }
     event.preventDefault();
 }
-
 
 function onMessageReceived(payload) {
     var mensagem = JSON.parse(payload.body);
@@ -77,7 +73,7 @@ function onMessageReceived(payload) {
         mensagem.conteudo = mensagem.remetente + ' entrou!';
     } else if (mensagem.type === 'SAIR') {
         mensagemElement.classList.add('evento-mensagem');
-        mensagem.conteudo = mensagem.remetente + ' esquerda!';
+        mensagem.conteudo = mensagem.remetente + ' saiu!';
     } else {
         mensagemElement.classList.add('chat-mensagem');
 
@@ -95,8 +91,12 @@ function onMessageReceived(payload) {
     }
 
     var textElement = document.createElement('p');
-    var mensagemText = document.createTextNode(mensagem.conteudo);
-    textElement.appendChild(mensagemText);
+    var textoFinal = (mensagem.type === 'ENTRAR' || mensagem.type === 'SAIR')
+                     ? mensagem.conteudo
+                     : mensagem.conteudo;
+
+    var messageText = document.createTextNode(textoFinal);
+    textElement.appendChild(messageText);
 
     mensagemElement.appendChild(textElement);
 
@@ -104,15 +104,14 @@ function onMessageReceived(payload) {
     mensagemArea.scrollTop = mensagemArea.scrollHeight;
 }
 
-
-function getAvatarColor(mensagemRemetente) {
+function getAvatarColor(messageSender) {
     var hash = 0;
-    for (var i = 0; i < mensagemRemetente.length; i++) {
-        hash = 31 * hash + mensagemRemetente.charCodeAt(i);
+    for (var i = 0; i < messageSender.length; i++) {
+        hash = 31 * hash + messageSender.charCodeAt(i);
     }
     var index = Math.abs(hash % colors.length);
     return colors[index];
 }
 
-usernameForm.addEventListener('submit', connect, true)
-mensagemForm.addEventListener('submit', enviarMensagem, true)
+usernameForm.addEventListener('submit', connect, true);
+mensagemForm.addEventListener('submit', enviarMensagem, true);

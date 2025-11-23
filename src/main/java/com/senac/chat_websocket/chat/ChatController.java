@@ -9,21 +9,16 @@ import org.springframework.stereotype.Controller;
 @Controller
 public class ChatController {
 
-    @MessageMapping("/chat.enviarMesagem")
+    @MessageMapping("/chat.enviarMensagem")
     @SendTo("/topic/public")
-    public ChatMessage enviarMensagem(
-            @Payload ChatMessage chatMessage
-    ) {
+    public ChatMessage enviarMensagem(@Payload ChatMessage chatMessage) {
         return chatMessage;
     }
 
     @MessageMapping("/chat.addUser")
     @SendTo("/topic/public")
-    public ChatMessage addUser(
-            @Payload ChatMessage chatMessage,
-            SimpMessageHeaderAccessor headerAccessor
-    ) {
-        // Adicionar username na sessão web socket
+    public ChatMessage addUser(@Payload ChatMessage chatMessage, SimpMessageHeaderAccessor headerAccessor) {
+        // Adiciona o usuario na sessao websocket
         headerAccessor.getSessionAttributes().put("username", chatMessage.getRemetente());
         return chatMessage;
     }

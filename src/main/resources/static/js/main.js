@@ -39,7 +39,7 @@ function onConnected() {
     // Tell your username to the server
     stompClient.send("/app/chat.addUser",
         {},
-        JSON.stringify({sender: username, type: 'ENTRAR'})
+        JSON.stringify({remetente: username, type: 'ENTRAR'})
     )
 
     connectingElement.classList.add('hidden');
@@ -47,17 +47,17 @@ function onConnected() {
 
 
 function onError(error) {
-    connectingElement.textContent = 'Voce não conseguiu entrar no servidor WebSocket. Por favor recarregue a pagina e tente denovo!';
+    connectingElement.textConteudo = 'Voce não conseguiu entrar no servidor WebSocket. Por favor recarregue a pagina e tente denovo!';
     connectingElement.style.color = 'red';
 }
 
 
-function sendMessage(event) {
-    var messageContent = messageInput.value.trim();
-    if(messageContent && stompClient) {
+function enviarMensagem(event) {
+    var messagecConteudo = messageInput.value.trim();
+    if(messagecConteudo && stompClient) {
         var chatMessage = {
-            sender: username,
-            content: messageInput.value,
+            remetente : username,
+            conteudo: messageInput.value,
             type: 'CHAT'
         };
         stompClient.send("/app/chat.enviarMensagem", {}, JSON.stringify(chatMessage));
@@ -74,10 +74,10 @@ function onMessageReceived(payload) {
 
     if(mensagem.type === 'ENTRAR') {
         mensagemElement.classList.add('evento-mensagem');
-        mensagem.content = mensagem.remetente + ' entrou!';
+        mensagem.conteudo = mensagem.remetente + ' entrou!';
     } else if (mensagem.type === 'SAIR') {
         mensagemElement.classList.add('evento-mensagem');
-        mensagem.content = mensagem.remetente + ' esquerda!';
+        mensagem.conteudo = mensagem.remetente + ' esquerda!';
     } else {
         mensagemElement.classList.add('chat-mensagem');
 

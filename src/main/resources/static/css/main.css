@@ -149,7 +149,7 @@ button.accent {
     height: calc(100% - 150px);
 }
 
-#chat-page #messageForm {
+#chat-page #mensagemForm {
     padding: 20px;
 }
 
@@ -164,24 +164,24 @@ button.accent {
     margin: 0;
 }
 
-#chat-page .event-message {
+#chat-page .evento-mensagem {
     width: 100%;
     text-align: center;
     clear: both;
 }
 
-#chat-page .event-message p {
+#chat-page .evento-mensagem p {
     color: #777;
     font-size: 14px;
     word-wrap: break-word;
 }
 
-#chat-page .chat-message {
+#chat-page .chat-mensagem {
     padding-left: 68px;
     position: relative;
 }
 
-#chat-page .chat-message i {
+#chat-page .chat-mensagem i {
     position: absolute;
     width: 42px;
     height: 42px;
@@ -198,21 +198,21 @@ button.accent {
     text-transform: uppercase;
 }
 
-#chat-page .chat-message span {
+#chat-page .chat-mensagem span {
     color: #333;
     font-weight: 600;
 }
 
-#chat-page .chat-message p {
+#chat-page .chat-mensagem p {
     color: #43464b;
 }
 
-#messageForm .input-group input {
+#mensagemForm .input-group input {
     float: left;
     width: calc(100% - 85px);
 }
 
-#messageForm .input-group button {
+#mensagemForm .input-group button {
     float: left;
     width: 80px;
     height: 38px;
@@ -230,7 +230,7 @@ button.accent {
     font-weight: 500;
 }
 
-.connecting {
+.conectando {
     padding-top: 5px;
     text-align: center;
     color: #777;
@@ -265,11 +265,11 @@ button.accent {
         height: calc(100% - 120px);
     }
 
-    #messageForm .input-group button {
+    #mensagemForm .input-group button {
         width: 65px;
     }
 
-    #messageForm .input-group input {
+    #mensagemForm .input-group input {
         width: calc(100% - 70px);
     }
 
@@ -277,7 +277,7 @@ button.accent {
         padding: 10px;
     }
 
-    .connecting {
+    .conectando {
         top: 60px;
     }
 

@@ -114,5 +114,5 @@ function getAvatarColor(mensagemRemetente) {
     return colors[index];
 }
 
-usernameForm.addEventListener('enviar', connect, true)
-messageForm.addEventListener('enviar', enviarMensagem, true)
+usernameForm.addEventListener('submit', connect, true)
+mensagemForm.addEventListener('submit', enviarMensagem, true)
